@@ -2,10 +2,11 @@
 
 import axios from "axios";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+/** In Docker dev, Next.js rewrites /api/* → backend. Use relative URL. */
+const API_BASE = "/api/v1";
 
 export const api = axios.create({
-  baseURL: `${API_BASE}/api/v1`,
+  baseURL: API_BASE,
   headers: { "Content-Type": "application/json" },
 });
 
@@ -32,7 +33,7 @@ api.interceptors.response.use(
       const refreshToken = localStorage.getItem("refresh_token");
       if (refreshToken) {
         try {
-          const res = await axios.post(`${API_BASE}/api/v1/auth/refresh`, {
+          const res = await axios.post(`/api/v1/auth/refresh`, {
             refresh_token: refreshToken,
           });
 
