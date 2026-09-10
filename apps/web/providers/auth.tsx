@@ -1,0 +1,18 @@
+/**
+ * AuthProvider — wraps the app, fetches user on mount.
+ */
+
+"use client";
+
+import { useEffect } from "react";
+import { useAuthStore } from "@/stores/auth";
+
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const fetchMe = useAuthStore((s) => s.fetchMe);
+
+  useEffect(() => {
+    fetchMe();
+  }, [fetchMe]);
+
+  return <>{children}</>;
+}

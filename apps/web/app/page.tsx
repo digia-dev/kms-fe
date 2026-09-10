@@ -1,15 +1,27 @@
-export default function Home() {
+/**
+ * Root page — redirect to dashboard or login.
+ */
+
+"use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/stores/auth";
+import { Loader2 } from "lucide-react";
+
+export default function HomePage() {
+  const { isAuthenticated, isLoading } = useAuthStore();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isLoading) {
+      router.push(isAuthenticated ? "/dashboard" : "/login");
+    }
+  }, [isLoading, isAuthenticated, router]);
+
   return (
-    <main className="flex min-h-screen items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold text-navy-900">KMS</h1>
-        <p className="mt-2 text-lg text-slate-500">
-          Komersial Manajemen Sistem
-        </p>
-        <p className="mt-4 text-sm text-slate-400">
-          Rapid Network / PT Media Cepat Indonesia
-        </p>
-      </div>
-    </main>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-navy-900 via-navy-800 to-navy-900">
+      <Loader2 className="w-8 h-8 text-orange-500 animate-spin" />
+    </div>
   );
 }
