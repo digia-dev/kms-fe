@@ -1,4 +1,4 @@
-"""API client — Axios instance with interceptors for JWT."""
+/** API client — Axios instance with interceptors for JWT. */
 
 import axios from "axios";
 
